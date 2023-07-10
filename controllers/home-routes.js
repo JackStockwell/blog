@@ -1,12 +1,21 @@
 const router = require('express').Router();
-const {  } = require('../models');
+const { User, Post } = require('../models');
 
 
 
 router.get('/', async (req, res) => {
-    try {
-        
-    } catch (err) {
-        return res.status(500).json(err)
+  try {
+    const postData = await Post.findAll();
+
+    if (!postData) {
+      return res.status(404).json({
+        message: "User not found",
+      })
     }
+    
+    res.status(200).json(postData)
+      
+  } catch (err) {
+    return res.status(500).json(err)
+  }
 });
