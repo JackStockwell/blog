@@ -2,12 +2,12 @@ const { Post } = require('../models')
 
 const postData = [
     {
-        "content": "My super cool new thread!",
-        "user_id": [1]
+        content: "My super cool new thread!",
+        user_id: [1]
     },
     {
-        "content": "Haven't got a scooby doo?",
-        "user_id": [2]
+        content: "Haven't got a scooby doo?",
+        user_id: [2]
     },
 ]
 

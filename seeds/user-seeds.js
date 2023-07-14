@@ -8,7 +8,27 @@ const userData = [
     },
     {
         "username": "dooUser",
-        "email": "doo@email.com",
+        "email": "doqqqqqqqo@email.com",
+        "password": "thisismypassword"
+    },
+    {
+        "username": "dsssooUser",
+        "email": "doqqqqqo@email.com",
+        "password": "thisismypassword"
+    },
+    {
+        "username": "dowdawdawdr",
+        "email": "doqqqqq123123qo@email.com",
+        "password": "thisismypassword"
+    },
+    {
+        "username": "testesdooUser",
+        "email": "doqqqo@email.com",
+        "password": "thisismypassword"
+    },
+    {
+        "username": "qqqqdooUser",
+        "email": "doqo@email.com",
         "password": "thisismypassword"
     },
 ]

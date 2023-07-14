@@ -12,6 +12,7 @@ const seedAll = async () => {
     await seedPosts();
     console.log('\n----- POSTS SEEDED -----\n');
     
+    
     process.exit(0);
 };
 

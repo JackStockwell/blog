@@ -1,9 +1,11 @@
 const router = require('express').Router();
-const { User } = require('../../models');
+const { User, Post, UserFollow } = require('../../models');
 
 router.get('/', async (req, res) => {
     try {
-        const userData = await User.findAll();
+        const userData = await User.findAll({
+            include: ['followers', 'following']
+        });
 
     if (!userData) {
         return res.status(404).json({
