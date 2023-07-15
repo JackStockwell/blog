@@ -1,5 +1,7 @@
 const router = require('express').Router();
 const { User, Post, UserFollow } = require('../../models');
+const { findAll } = require('../../models/User');
+const withAuth = require('../../utils/withAuth')
 
 router.get('/', async (req, res) => {
     try {
@@ -9,8 +11,8 @@ router.get('/', async (req, res) => {
                     model: Post,
                     attributes: []
                 },
-                'follower',
-                'following'
+                'following',
+                'follower'
             ]
         });
 
@@ -26,22 +28,47 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.get('/follow/:name', async (req, res) => {
+router.get('/dev/userfollow', async (req, res) => {
+    const allData = await UserFollow.findAll();
+
+    res.status(200).json(allData)
+})
+
+router.post('/follow/:name', withAuth, async (req, res) => {
+
     console.log(req.session)
-    console.log(req.body)
+
     try {
-        const newFollow = {
-            user_id: req.session.user_id,
-            follow_user_id: req.body.id
+
+        if (!req.session.logged_in) {
+            res.status(401).redirect('/')
+            return
         }
 
-        const userFollow = await UserFollow.create(newFollow);
+        const followUser = await User.findOne({
+            where: {username: req.body.username}
+        })
 
-
-        console.log(userFollow)
-
-        res.status(200).json(userFollow)
+        const following = followUser.toJSON();
         
+        console.log(following)
+
+
+        const followData = await UserFollow.create({
+            user_id: req.session.user_id,
+            follow_user_id: following.id
+        })
+
+        // const userFollow = await UserFollow.create({
+        //     user_id: req.session.user_id,
+        //     follow_user_id: following.id
+        // });
+
+
+        // console.log(userFollow)
+
+        res.status(200).json(followData)
+
     } catch (err) {
         res.status(500).json(err)
     }

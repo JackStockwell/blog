@@ -49,10 +49,21 @@ router.get('/user/:name', async (req, res) => {
       const userData = await User.findOne({
           where: {
               username: req.params.name
-          }
+          },
+          include: [
+            {
+              model: User,
+              as: 'follower',
+              include: {
+                model: Post,
+              }
+            }
+          ]
       })
 
-      const profile = userData.get({plain: true})
+      const profile = userData.toJSON();
+
+      console.log(profile)
 
       res.render(
         'profile',

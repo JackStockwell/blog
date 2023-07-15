@@ -18,7 +18,7 @@ const signup = async (event) => {
       
       console.log(response)
       if (response.ok) {
-        document.location.replace(`/users/${username}`);
+        document.location.replace(`/user/${username}`);
       } else {
         alert(response.statusText);
       }
