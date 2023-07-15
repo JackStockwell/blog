@@ -4,7 +4,14 @@ const { User, Post, UserFollow } = require('../../models');
 router.get('/', async (req, res) => {
     try {
         const userData = await User.findAll({
-            include: ['followers', 'following']
+            include: [
+                {
+                    model: Post,
+                    attributes: []
+                },
+                'follower',
+                'following'
+            ]
         });
 
     if (!userData) {
@@ -19,12 +26,32 @@ router.get('/', async (req, res) => {
     }
 });
 
+router.get('/follow/:name', async (req, res) => {
+    console.log(req.session)
+    console.log(req.body)
+    try {
+        const newFollow = {
+            user_id: req.session.user_id,
+            follow_user_id: req.body.id
+        }
+
+        const userFollow = await UserFollow.create(newFollow);
+
+
+        console.log(userFollow)
+
+        res.status(200).json(userFollow)
+        
+    } catch (err) {
+        res.status(500).json(err)
+    }
+})
+
 router.post('/signup', async (req, res) => {
     console.log(req)
     try {
       const userData = await User.create(req.body);
 
-  
       req.session.save(() => {
         req.session.user_id = userData.id;
         req.session.logged_in = true;
@@ -37,6 +64,7 @@ router.post('/signup', async (req, res) => {
 });
 
 router.post('/login', async (req, res) => {
+    console.log(req.body)
     try {
       const userData = await User.findOne({ where: { email: req.body.email } });
   
@@ -46,6 +74,7 @@ router.post('/login', async (req, res) => {
           .json({ message: 'Incorrect email or password, please try again' });
         return;
       }
+      
   
       const validPassword = await userData.checkPassword(req.body.password);
   
