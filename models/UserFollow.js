@@ -7,6 +7,7 @@ UserFollow.init(
     {
         user_id: {
             type: DataTypes.INTEGER,
+            allowNull: false,
             references: {
                 model: 'user',
                 key: 'id',
@@ -14,6 +15,7 @@ UserFollow.init(
         },
         follow_user_id: {
             type: DataTypes.INTEGER,
+            allowNull: false,
             references: {
                 model: 'user',
                 key: 'id',

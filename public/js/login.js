@@ -20,7 +20,7 @@ const loginHandler = async (event) => {
         });
 
         if (response.ok) {
-            document.location.replace('/user')
+            document.location.replace('/')
         } else {
             const alertEl = document.querySelector('.alert')
             alertEl.value = "Incorrect Email or Password!"

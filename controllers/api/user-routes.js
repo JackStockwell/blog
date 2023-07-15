@@ -1,10 +1,19 @@
 const router = require('express').Router();
 const { User, Post, UserFollow } = require('../../models');
+const { findAll } = require('../../models/User');
+const withAuth = require('../../utils/withAuth')
 
 router.get('/', async (req, res) => {
     try {
         const userData = await User.findAll({
-            include: ['followers', 'following']
+            include: [
+                {
+                    model: Post,
+                    attributes: []
+                },
+                'following',
+                'follower'
+            ]
         });
 
     if (!userData) {
@@ -19,12 +28,57 @@ router.get('/', async (req, res) => {
     }
 });
 
+router.get('/dev/userfollow', async (req, res) => {
+    const allData = await UserFollow.findAll();
+
+    res.status(200).json(allData)
+})
+
+router.post('/follow/:name', withAuth, async (req, res) => {
+
+    console.log(req.session)
+
+    try {
+
+        if (!req.session.logged_in) {
+            res.status(401).redirect('/')
+            return
+        }
+
+        const followUser = await User.findOne({
+            where: {username: req.body.username}
+        })
+
+        const following = followUser.toJSON();
+        
+        console.log(following)
+
+
+        const followData = await UserFollow.create({
+            user_id: req.session.user_id,
+            follow_user_id: following.id
+        })
+
+        // const userFollow = await UserFollow.create({
+        //     user_id: req.session.user_id,
+        //     follow_user_id: following.id
+        // });
+
+
+        // console.log(userFollow)
+
+        res.status(200).json(followData)
+
+    } catch (err) {
+        res.status(500).json(err)
+    }
+})
+
 router.post('/signup', async (req, res) => {
     console.log(req)
     try {
       const userData = await User.create(req.body);
 
-  
       req.session.save(() => {
         req.session.user_id = userData.id;
         req.session.logged_in = true;
@@ -37,6 +91,7 @@ router.post('/signup', async (req, res) => {
 });
 
 router.post('/login', async (req, res) => {
+    console.log(req.body)
     try {
       const userData = await User.findOne({ where: { email: req.body.email } });
   
@@ -46,6 +101,7 @@ router.post('/login', async (req, res) => {
           .json({ message: 'Incorrect email or password, please try again' });
         return;
       }
+      
   
       const validPassword = await userData.checkPassword(req.body.password);
   
