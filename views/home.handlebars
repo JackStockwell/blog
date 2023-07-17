@@ -1,3 +1,8 @@
+<form action="/api/posts/" method="post" class="post-box">
+    <label for="postContent">What's on your mind?</label>
+    <input type="text" name="postContent" id="postContent">
+</form>
+
 {{#each posts as |post|}}
 {{> post-timeline}}
 {{/each}}

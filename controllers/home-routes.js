@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const { json } = require('sequelize');
 const sequelize = require('../config/connection');
 const { User, Post } = require('../models');
 const withAuth = require('../utils/withAuth.js')
@@ -44,26 +45,50 @@ router.get('/', withAuth, async (req, res) => {
   }
 });
 
+      // const userData = await User.findOne({
+      //     where: {
+      //         username: req.params.name
+      //     },
+      //     include: [
+      //       {
+      //         model: User,
+      //         as: 'follower',
+      //         include: {
+      //           model: Post,
+      //         }
+      //       }
+      //     ]
+      // })
+
 router.get('/user/:name', async (req, res) => {
   try {
+
       const userData = await User.findOne({
-          where: {
-              username: req.params.name
-          },
-          include: [
-            {
-              model: User,
-              as: 'follower',
-              include: {
-                model: Post,
-              }
-            }
-          ]
+        where: {
+          username: req.params.name
+        },
+        include: Post
       })
 
-      const profile = userData.toJSON();
+      console.log(userData)
 
-      console.log(profile)
+      // const profileUser = userData.toJSON();
+
+      // const profilePosts = userData.posts.map((post) => post.toJSON())
+
+      const profile = {
+        profile: function() {
+          return userData.toJSON()
+        },
+        posts: function() {
+          return userData.posts.map((post) => post.toJSON())
+        }
+      }
+
+      const jsonProfile = sequelize.JSON(profile)
+      
+
+      console.log(jsonProfile)
 
       res.render(
         'profile',

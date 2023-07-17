@@ -1,6 +1,5 @@
 const router = require('express').Router();
 const { User, Post, UserFollow } = require('../../models');
-const { findAll } = require('../../models/User');
 const withAuth = require('../../utils/withAuth')
 
 router.get('/', async (req, res) => {
@@ -40,11 +39,6 @@ router.post('/follow/:name', withAuth, async (req, res) => {
 
     try {
 
-        if (!req.session.logged_in) {
-            res.status(401).redirect('/')
-            return
-        }
-
         const followUser = await User.findOne({
             where: {username: req.body.username}
         })
@@ -58,14 +52,6 @@ router.post('/follow/:name', withAuth, async (req, res) => {
             user_id: req.session.user_id,
             follow_user_id: following.id
         })
-
-        // const userFollow = await UserFollow.create({
-        //     user_id: req.session.user_id,
-        //     follow_user_id: following.id
-        // });
-
-
-        // console.log(userFollow)
 
         res.status(200).json(followData)
 
