@@ -16,13 +16,10 @@ router.get('/', async (req, res) => {
 
 router.post('/', withAuth, async (req, res) => {
 
-    console.log(req.body)
-    console.log(req.session)
-
     try {
 
         const newPost = {
-            content: req.body.postContent,
+            content: req.body.content,
             user_id: req.session.user_id
         }
 

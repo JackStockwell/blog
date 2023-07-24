@@ -1,0 +1,242 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500&display=swap');
+
+/* ROOT */
+
+:root {
+    --text: 'Ubuntu', 'sans-serif';
+    --bgdark: #050404;
+    --textlight: #D3D3D3;
+    --white-btn: #F5F3F4;
+    --red-btn: #BA181B;
+}
+
+/* BODY */
+
+body {
+    background: var(--bgdark);
+    color: var(--textlight);
+    font-family: 'Arial', 'sans-serif';
+}
+
+/* BUTTON */
+
+.btn {
+  align-items: center;
+  background-color: var(--white-btn);
+  border: 2px solid var(--bgdark);
+  box-sizing: border-box;
+  color: #000;
+  cursor: pointer;
+  display: inline-flex;
+  font-family: var(--text),sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+  text-transform: uppercase;
+  height: 48px;
+  justify-content: center;
+  letter-spacing: -.8px;
+  line-height: 24px;
+  min-width: 140px;
+  outline: 0;
+  padding: 1ch;
+  text-align: center;
+  text-decoration: none;
+  transition: all .3s;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.btn:focus {
+  color: #171e29;
+}
+
+.btn:hover {
+  border-color: var(--red-btn);
+  color: var(--red-btn);
+  fill: var(--red-btn);
+}
+
+.btn:active {
+  border-color: var(--red-btn);
+  color: var(--red-btn);
+  fill: var(--red-btn);
+}
+
+@media (min-width: 768px) {
+  .button-59 {
+    min-width: 170px;
+  }
+}
+
+/* LOGIN WINDOW */
+
+.loginWrapper {
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: center;
+    justify-items: center;
+    gap: 3rem;
+    margin: auto; 
+    width: 55%;
+    min-height: 100vh;
+    align-content: center;
+}
+
+.loginWrapper h1, 
+.loginWrapper h2,
+.loginWrapper h3 {
+    font-family: var(--text);
+    text-transform: uppercase;
+}
+
+.loginWrapper h1 {
+    font-size: 6ch;
+}
+
+.loginWrapper h2 {
+    font-size: 3ch;
+}
+
+.loginWrapper h3 {
+    font-size: 2ch;
+}
+
+.hr-vert {
+    width: 100%;
+    border: 2px solid va;
+
+}
+
+.title {
+    display: flex;
+    flex-flow: column nowrap;
+    width: 100%;
+    gap: 3rem;
+    text-align: center;
+}
+
+.log-container {
+    display: flex;
+    flex-flow: column nowrap;
+    text-align: center;
+    gap: 3rem;
+}
+
+.log-form {
+    display: flex;
+    flex-flow: column wrap;
+    gap: 2rem;
+    align-content: center;
+}
+
+.signin-div {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 1rem;
+}
+
+/* SIGNUP FORM */
+
+.signup-form {
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+.signup-form input {
+    padding: 10px;
+}
+
+/* NAV */
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    background: var(--white-btn);
+    color: var(--bgdark);
+}
+
+nav h1 {
+    font-size: 6ch;
+}
+
+nav a {
+    text-decoration: none;
+    color: inherit;
+}
+
+nav a:any-link {
+    text-decoration: none;
+}
+
+h1::after{
+    content: '.';
+    color: var(--red-btn);
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 60vw;
+    max-width: 80em;
+    padding: 0.5rem;
+}
+
+/* WRAPPERS */
+
+.main-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-flow: column nowrap;
+}
+
+.main-content-wrapper {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    width: 60vw;
+    max-width: 80em;
+    padding: 0.5rem;
+    gap: 3rem;
+}
+
+.post-container {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 1rem;
+}
+
+.post-wrapper {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 2rem;
+}
+
+/* POST BOX */
+
+textarea {
+    resize: none;
+    height: 3rem;
+}
+
+.post-box {
+    display: flex;
+    flex-flow: column nowrap;
+    border: 1px solid white;
+    padding: 0.5rem;
+    gap: 1rem;
+}
+
+@media(min-width: 60em) {
+    .hr-vert {
+        transform: rotate(90deg);
+        width: 33rem;
+    }
+
+    .loginWrapper {
+        grid-template-columns: 1fr 30px 1fr;
+    }
+}

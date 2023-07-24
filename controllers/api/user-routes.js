@@ -23,15 +23,10 @@ router.get('/', async (req, res) => {
 
     res.status(200).json(userData)
     } catch (err) {
+        console.log(err)
         return res.status(500).json(err)
     }
 });
-
-router.get('/dev/userfollow', async (req, res) => {
-    const allData = await UserFollow.findAll();
-
-    res.status(200).json(allData)
-})
 
 router.post('/follow/:name', withAuth, async (req, res) => {
 
@@ -45,9 +40,6 @@ router.post('/follow/:name', withAuth, async (req, res) => {
 
         const following = followUser.toJSON();
         
-        console.log(following)
-
-
         const followData = await UserFollow.create({
             user_id: req.session.user_id,
             follow_user_id: following.id
@@ -61,18 +53,26 @@ router.post('/follow/:name', withAuth, async (req, res) => {
 })
 
 router.post('/signup', async (req, res) => {
-    console.log(req)
-    try {
-      const userData = await User.create(req.body);
 
-      req.session.save(() => {
-        req.session.user_id = userData.id;
-        req.session.logged_in = true;
-  
-        res.status(200).json(userData);
-      });
+    try {
+        const userData = await User.create(req.body);
+
+        req.session.save(() => {
+            req.session.user_id = userData.id;
+            req.session.logged_in = true;
+    
+            res.status(200).json(userData);
+        });
     } catch (err) {
-      res.status(400).json(err);
+        switch (err.parent.errno) {
+            case 1062:
+                res.status(400).json({
+                    message: "Username or Password must be unique!"
+                })
+                break;
+            default:
+                res.status(500).json(err)
+        }
     }
 });
 

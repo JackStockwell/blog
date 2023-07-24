@@ -33,12 +33,11 @@ router.get('/', withAuth, async (req, res) => {
 
     const posts = postData.map((post) => post.toJSON())
 
-    console.log(posts)
-
     res.render(
-      'home',
-      {posts}
-    )
+        'home', {
+        posts,
+        logged_in: req.session.logged_in
+    })
 
   } catch (err) {
     return res.status(500).json(err)
@@ -69,12 +68,6 @@ router.get('/user/:name', async (req, res) => {
         },
         include: Post
       })
-
-      console.log(userData)
-
-      // const profileUser = userData.toJSON();
-
-      // const profilePosts = userData.posts.map((post) => post.toJSON())
 
       const profile = {
         profile: function() {
