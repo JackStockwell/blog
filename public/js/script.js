@@ -51,13 +51,13 @@ const followUser = async (event) => {
     }
 }
 
-openLogoutModal = async (event) => {
+const openLogoutModal = async (event) => {
     event.preventDefault();
     const modalLogout = document.querySelector('[data-modal-logout]')
     modalLogout.showModal()
 }
 
-closeLogoutModal = async (event) => {
+const closeLogoutModal = async (event) => {
     event.preventDefault();
     const modalLogout = document.querySelector('[data-modal-logout]')
     modalLogout.close()

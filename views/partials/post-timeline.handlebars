@@ -1,5 +1,13 @@
 <section class="post">
-    <a href="/user/{{user.username}}" target="_blank">{{user.username}}</a>
-        <p>{{content}}</p>
-        <p class="date-made">{{date_created}}</p>
+    <div class="post-img-div">
+        <img src="/assets/icons/default.png" alt="Profile avatar">
+    </div>
+    <div class="post-profile">
+        <a href="/user/{{user.username}}" target="_blank">{{user.username}}</a>
+    </div>
+    <div>
+        <p class="post-p">{{content}}</p>
+        <hr>
+    </div>
+    <p class="date-made">{{date_created}}</p>
 </section>
