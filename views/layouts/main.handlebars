@@ -15,10 +15,14 @@
         <nav>
             <div class="nav-container">
                 <div>
-                    <a href=""><h1>SHOUT</h1></a>
+                    <a href="/"><h1>SHOUT</h1></a>
                 </div>
                 <div>
+                    {{#if logged_in}}
                     <a href="/profile" class="btn">profile</a>
+                    {{else}}
+                    <a href="/signup" class="btn">login</a>
+                    {{/if}}
                     <button data-open-logout class="btn" id="logout" onclick="openLogoutModal(event)">logout</button>
                     <dialog data-modal-logout class="modal">
                         <h2>Logout?</h2>

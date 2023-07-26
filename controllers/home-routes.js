@@ -6,13 +6,11 @@ const withAuth = require('../utils/withAuth.js')
 
 
 
-router.get('/', withAuth, async (req, res) => {
+router.get('/', async (req, res) => {
   try {
 
     const postData = await Post.findAll({
-      where: {
-        
-      },
+      where: {},
       attributes: ['id', 'content', 'date_created'],
       order: [
         ['date_created', 'DESC']
@@ -92,7 +90,24 @@ router.get('/user/:name', async (req, res) => {
   }
 })
 
-router.get('/login', (req, res) => {
+router.get('/post/:id', withAuth, async (req, res) => {
+  try {
+    const postData = await Post.findOne({
+      where: {id: req.params.id}
+    })
+
+    console.log(postData)
+
+    res.render('post', {
+      postData,
+      logged_in: req.session.logged_in
+    })
+  } catch (err) {
+
+  }
+})
+
+router.get('/login', withAuth, (req, res) => {
   
   if (req.session.logged_in) {
     res.redirect('/')

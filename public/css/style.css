@@ -44,6 +44,12 @@ body {
   transition: all .3s;
   user-select: none;
   touch-action: manipulation;
+  transform: scale(0.8);
+}
+
+.width100 {
+    width: 100%;
+    transform: scale(1);
 }
 
 .btn:focus {
@@ -159,7 +165,7 @@ nav {
 }
 
 nav h1 {
-    font-size: 6ch;
+    font-size: 5ch;
 }
 
 nav a {
@@ -180,6 +186,7 @@ h1::after{
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-flow: column wrap;
     width: 90vw;
     max-width: 60em;
     padding: 0.5rem 0;
@@ -209,6 +216,7 @@ h1::after{
     flex-flow: column nowrap;
     gap: 2rem;
     width: 100%;
+    max-width: 30em;
 }
 
 aside {
@@ -290,7 +298,7 @@ textarea {
 
 .post-p {
     color: var(--bgdark);
-    padding: 0.25rem 0 .025rem 0;
+    padding: 0.5rem 0;
 }
 
 .post a:any-link {
@@ -299,6 +307,8 @@ textarea {
 }
 
 .date-made {
+    display: flex;
+    justify-content: space-between;
     grid-area: four;
     color: rgba(0, 0, 0, 0.414);
     padding: 0.25rem 0 0 0;
@@ -320,5 +330,13 @@ textarea {
 
     aside {
         order: 2
+    }
+
+    .nav-container {
+        flex-flow: row nowrap;
+    }
+
+    .btn {
+        transform: scale(1);
     }
 }

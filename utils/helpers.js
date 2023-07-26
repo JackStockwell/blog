@@ -1,5 +1,8 @@
+const dayjs = require('dayjs')
+
 module.exports = {
-    sort_time: async (dates) => {
-        const timeData = await dates.sort()
-    }
+    formatDate: (date) => {
+        const parsedDate = Date.parse(date)
+        return dayjs(parsedDate).format('HH:mm | MMM DD, YYYY')
+    },
 }

@@ -17,6 +17,10 @@ const newPost = async (event) => {
     event.preventDefault();
 
     const content = document.querySelector('[data-post-text]').value.trim();
+    
+    if (content.length < 1) {
+        return 
+    }
 
     const response = await fetch('/api/posts', {
         method: 'POST',
@@ -36,7 +40,6 @@ const followUser = async (event) => {
     event.preventDefault();
 
     const username = document.querySelector('#username-handle').getAttribute("data-username")
-    console.log(username)
 
     const response = await fetch(`/api/users/follow/${username}`, {
         method: 'POST',

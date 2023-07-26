@@ -1,13 +1,13 @@
-<section class="post">
+<section class="post" data-post-id="{{id}}">
     <div class="post-img-div">
         <img src="/assets/icons/default.png" alt="Profile avatar">
     </div>
     <div class="post-profile">
         <a href="/user/{{user.username}}" target="_blank">{{user.username}}</a>
     </div>
-    <div>
+    <a href="/post/{{id}}">
         <p class="post-p">{{content}}</p>
         <hr>
-    </div>
-    <p class="date-made">{{date_created}}</p>
+    </a>
+    <div class="date-made"><a href="/post/{{id}}">View Comments</a><p>{{formatDate date_created}}</p></div>
 </section>
