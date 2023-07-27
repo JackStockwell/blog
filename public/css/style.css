@@ -266,6 +266,7 @@ textarea {
     "one three"
     "one four";
     padding: 0.75rem;
+    box-shadow: 0 10px 6px -6px var(--textlight);
 }
 
 .post-img-div {
@@ -312,6 +313,52 @@ textarea {
     grid-area: four;
     color: rgba(0, 0, 0, 0.414);
     padding: 0.25rem 0 0 0;
+}
+
+/* POPUP */
+
+.pop-up {
+    display: none;
+    position: fixed;
+    bottom: 2.5%;
+    left: 50%;
+    transform: translate(-50%, 2.5%);
+    background: var(--white-btn);
+    padding: 1rem;
+    border: 3px solid var(--bgdark);
+    border-radius: 0.5rem;
+    width: 80%;
+    max-width: 50em;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--bgdark);
+}
+
+.slide {
+    display: flex;
+    animation: slideup 5s ease-in-out;
+}
+
+@keyframes slideup {
+    from {
+        transform: translate(-50%, 200%);
+    }
+
+    10% {
+        transform: translate(-50%, 2.5%);
+        opacity: 1;
+    }
+
+    90% {
+        transform: translate(-50%, 2.5%);
+        opacity: 1;
+    }
+
+    to {
+        transform: translate(-50%, 200%);
+        opacity: 0;
+    }
+
 }
 
 @media(min-width: 60em) {

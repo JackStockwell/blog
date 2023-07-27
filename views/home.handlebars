@@ -1,10 +1,10 @@
 <main class="main-content-wrapper">
     <section class="post-wrapper">
         <section class="post-box">
-            <form onsubmit="newPost(event)" class="post-form">
+            <form class="post-form">
                 <label for="postContent">What's on your mind?</label>
                 <textarea data-post-text type="text" name="postContent" id="postContent"></textarea>
-                <input type="submit" class="width100 btn" value="post">
+                <input type="button" class="width100 btn" value="post" onclick="newPost(event)">
             </form>
         </section>
         <section class="post-container">

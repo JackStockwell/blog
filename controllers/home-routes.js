@@ -107,7 +107,7 @@ router.get('/post/:id', withAuth, async (req, res) => {
   }
 })
 
-router.get('/login', withAuth, (req, res) => {
+router.get('/login', (req, res) => {
   
   if (req.session.logged_in) {
     res.redirect('/')

@@ -14,12 +14,13 @@ const handleLogout = async () => {
 }
 
 const newPost = async (event) => {
+
     event.preventDefault();
 
     const content = document.querySelector('[data-post-text]').value.trim();
     
     if (content.length < 1) {
-        return 
+        return
     }
 
     const response = await fetch('/api/posts', {
@@ -28,10 +29,18 @@ const newPost = async (event) => {
         headers: {'Content-Type': 'application/json'},
     })
 
-    if (response.ok) {
-        document.location.reload();
-    } else {
-        alert(response.statusText)
+    switch (response.status) {
+        case 200:
+            window.location.reload();
+            break;
+        case 401:
+            const alert = document.querySelector('[data-alert]')
+            alert.classList.add("slide")
+            document.querySelector('[data-alert-text]').innerHTML = response.statusText
+            setTimeout(() => {alert.classList.remove('slide')}, 4900)
+
+        default:
+            break;
     }
 } 
 
