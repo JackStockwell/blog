@@ -192,6 +192,24 @@ h1::after{
     padding: 0.5rem 0;
 }
 
+.home-div {
+    display: flex;
+    align-items: center;
+}
+
+.home-div a {
+    margin: 10px;
+}
+
+.fa-solid {
+    transform: scale(1.5);
+    animation: scale 1s ease-in;
+}
+
+.fa-solid:hover {
+    transform: scale(1.6);
+}
+
 /* WRAPPERS */
 
 .main-wrapper {

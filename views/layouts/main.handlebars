@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Blog</title>
+  <script src="https://kit.fontawesome.com/d9306d9c98.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="/css/reset.css">
   <link rel="stylesheet" href="/css/style.css">
 </head>
@@ -13,15 +14,13 @@
 <!-- Conditionally render login or logout links -->
         <nav>
             <div class="nav-container">
-                <div>
+                <div class="home-div">
                     <a href="/"><h1>SHOUT</h1></a>
+                    <a href="/"><i class="fa-solid fa-house"></i></a>
                 </div>
                 <div>
                     {{#if logged_in}}
                     <a href="/login" class="btn">profile</a>
-                    {{else}}
-                    <a href="/signup" class="btn">login</a>
-                    {{/if}}
                     <button data-open-logout class="btn" id="logout" onclick="openLogoutModal(event)">logout</button>
                     <dialog data-modal-logout class="modal">
                         <h2>Logout?</h2>
@@ -30,6 +29,9 @@
                             <button class="btn" data-close-modal-logout onclick="closeLogoutModal(event)">No</button>
                         </div>
                     </dialog>
+                    {{else}}
+                    <a href="/login" class="btn">login</a>
+                    {{/if}}
                 </div>
             </div>
         </nav>

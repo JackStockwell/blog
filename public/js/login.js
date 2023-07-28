@@ -34,14 +34,14 @@ const signupHandler = async (event) => {
     const passwordConfirm = document.querySelector('#password2-signup').value.trim();
 
     if (username && email && password === passwordConfirm) {
-        const response = await fetch('/api/users/signup', {
+        const response = await fetch('/api/users/create', {
             method: 'POST',
             body: JSON.stringify({ username, email, password }),
             headers: { 'Content-Type': 'application/json' },
         });
 
         if (response.ok) {
-            document.location.replace(`/user/${username}`);
+            document.location.replace(`/`);
         } else {
             alert(response.statusText);
         }
