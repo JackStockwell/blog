@@ -11,7 +11,6 @@
 
 <body>
 <!-- Conditionally render login or logout links -->
-    {{#if logged_in}}
         <nav>
             <div class="nav-container">
                 <div>
@@ -34,7 +33,6 @@
                 </div>
             </div>
         </nav>
-    {{/if}}
 
     <main class="main-wrapper">
         {{{ body }}}
