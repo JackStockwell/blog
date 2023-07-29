@@ -1,5 +1,7 @@
 // Query Selector
 
+const { post } = require("../../controllers/home-routes")
+
 const handleLogout = async () => {
     const response = await fetch('/api/users/logout', {
         method: 'POST',
@@ -61,6 +63,21 @@ const followUser = async (event) => {
     } else {
         alert("Something went wrong..")
     }
+}
+
+const newComment = async (event) => {
+    event.preventDefault();
+
+    const content = document.querySelector('[data-post-text]').value.trim();
+    const post_id = document.querySelector('[data-post-id]').getAttribute('data-post-id')
+    console.log(post_id)
+    const response = await fetch(`/api/users/follow/${username}`, {
+        method: 'POST',
+        body: JSON.stringify({content}),
+        headers: {'Content-Type': 'application/json'},
+    })
+
+    
 }
 
 const openLogoutModal = async (event) => {

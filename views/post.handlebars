@@ -1,7 +1,34 @@
 <main class="main-content-wrapper">
     <section class="post-wrapper">
         <section class="post-box">
-            
+            <section class="post" data-post-id="{{post.id}}">
+                <div class="post-img-div">
+                    <img src="/assets/icons/default.png" alt="Profile avatar">
+                </div>
+                <div class="post-profile">
+                    <a href="/user/{{post.user.username}}" target="_blank">{{post.user.username}}</a>
+                </div>
+                <a href="/post/{{id}}">
+                    <p class="post-p">{{post.content}}</p>
+                    <hr>
+                </a>
+                <div class="date-made">
+                    <a href="/post/{{id}}"><i class="fa-solid fa-comment"></i>View Comments</a><p>{{formatDate post.date_created}}</p>
+                </div>
+            </section>
+            <section class="comment-wrapper">
+            {{!-- COMMENTS --}}
+                <section class="post-form">
+                    <h3>Comment</h3>
+                    <textarea rows="6" data-post-text type="text" name="comment" class="" placeholder="What do you want to say?"></textarea>
+                    <input type="button" class="btn" onclick="newComment(event)" value="Comment">
+                </section>
+                <section>
+                    {{#each posts as |post|}}
+                    {{> post-timeline}}
+                    {{/each}}           
+                </section>
+            </section>
         </section>
     </section>
     <aside>

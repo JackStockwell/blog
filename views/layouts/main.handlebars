@@ -16,12 +16,12 @@
             <div class="nav-container">
                 <div class="home-div">
                     <a href="/"><h1>SHOUT</h1></a>
-                    <a href="/"><i class="fa-solid fa-house"></i></a>
+                    <a href="/"><i class="fa-solid fa-house fa-ani"></i></a>
                 </div>
                 <div>
                     {{#if logged_in}}
-                    <a href="/login" class="btn">profile</a>
-                    <button data-open-logout class="btn" id="logout" onclick="openLogoutModal(event)">logout</button>
+                    <a href="/login" class="btn"><i class="fa-solid fa-user"></i>profile</a>
+                    <button data-open-logout class="btn" id="logout" onclick="openLogoutModal(event)"><i class="fa-solid fa-right-to-bracket"></i>logout</button>
                     <dialog data-modal-logout class="modal">
                         <h2>Logout?</h2>
                         <div class="modal-wrapper logout-modal"> 
