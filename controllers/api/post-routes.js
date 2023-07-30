@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { User, Post, UserFollow } = require('../../models');
-const withAuth = require('../../utils/withAuth')
+const withAuth = require('../../utils/withAuth.js')
 
 router.get('/', async (req, res) => {
     try {
@@ -14,15 +14,17 @@ router.get('/', async (req, res) => {
     }
 })
 
-router.post('/', withAuth, async (req, res) => {
-
-    console.log(req.body)
-    console.log(req.session)
+router.post('/', async (req, res) => {
 
     try {
+        if (!req.session.user_id) {
+            res.statusMessage = "You must be logged in to post!"
+            res.status(401).end();
+            return
+        }
 
         const newPost = {
-            content: req.body.postContent,
+            content: req.body.content,
             user_id: req.session.user_id
         }
 

@@ -1,14 +1,40 @@
-<section class="container-login">
-    <h2>Log in to Bundles</h2>
-    <p class="alert"></p>
-    <form onsubmit="loginHandler(event)">
-        <input type="email" name="email" id="email-box">
-        <input type="password" name="password" id="password-box">
-        <input type="submit" value="Login" onclick="loginHandler();">
-    </form>
-    <br>
-    <h2>Don't have an account?</h2>
-    <a href="/signup" class="btn">Sign-up here!</a>
-</section>
+<main class="loginWrapper">
+    <div class="title">
+        <h1>SHOUT</h1>
+        <h2>You'll hear what it's all about.</h2>
+        <h3>A blog for those who want to be well connected across a far reaching populace.</h3>
+    </div>
+    <hr class="hr-vert">
+    <div class="log-container">
+        <section class="log-form">
+            <h3>Sign-up</h3>
+            <p>Sign-up to experience SHOUT at its best.</p>
+            <form onsubmit="signupHandler(event)" class="signup-form">
+                <input type="text" name="username" id="user-signup" placeholder="Username">
+                <br>
+                <input type="email" name="email" id="email-signup" placeholder="Email">
+                <br>
+                <input type="password" name="password1" id="password1-signup" placeholder="Password">
+                <br>
+                <input type="password" name="password2" id="password2-signup" placeholder="Confirm Password">
+                <br>
+                <input type="submit" onsubmit="signupHandler(event)" class="btn" id="submit" value="Login">
+            </form>
+        </section>
+        <section class="signin-div">
+            <h3>Already got an account?</h3>
+            <button data-open-signin class="btn" onclick="openLoginModal(event)">Sign-in</button>
+            <dialog data-modal-login>
+                <h4>Log in to Bundles</h4>
+                <p class="alert"></p>
+                <form onsubmit="loginHandler(event)">
+                    <input type="email" name="email" id="email-box">
+                    <input type="password" name="password" id="password-box">
+                    <input type="submit" class="btn" value="Login" onclick="loginHandler(event);">
+                </form>
+            </dialog>
+        </section>
+    </div>
+</main>
 
 <script src="/js/login.js"></script>

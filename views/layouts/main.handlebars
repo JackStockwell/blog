@@ -5,37 +5,52 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Blog</title>
+  <script src="https://kit.fontawesome.com/d9306d9c98.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="/css/reset.css">
   <link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body>
-  <div class="">
-    <header class="">
-      <h1>
-      </h1>
-      <nav>
-        <!-- Conditionally render login or logout links -->
-        {{#if logged_in}}
-        <a href="/profile">profile</a> |
-        <button class="no-button" id="logout">logout</button>
-        {{else}}
-        <a href="/login">login</a>
-        {{/if}}
-      </nav>
-    </header>
-    <main class="container container-fluid mt-5">
-      <!-- Layout -->
-      {{{ body }}}
+<!-- Conditionally render login or logout links -->
+        <nav>
+            <div class="nav-container">
+                <div class="home-div">
+                    <a href="/"><h1>SHOUT</h1></a>
+                    <a href="/"><i class="fa-solid fa-house fa-ani"></i></a>
+                </div>
+                <div>
+                    {{#if logged_in}}
+                    <a href="/login" class="btn"><i class="fa-solid fa-user"></i>profile</a>
+                    <button data-open-logout class="btn" id="logout" onclick="openLogoutModal(event)"><i class="fa-solid fa-right-to-bracket"></i>logout</button>
+                    <dialog data-modal-logout class="modal">
+                        <h2>Logout?</h2>
+                        <div class="modal-wrapper logout-modal"> 
+                            <button class="btn" onclick="handleLogout(event)">Yes</button>
+                            <button class="btn" data-close-modal-logout onclick="closeLogoutModal(event)">No</button>
+                        </div>
+                    </dialog>
+                    {{else}}
+                    <a href="/login" class="btn">login</a>
+                    {{/if}}
+                </div>
+            </div>
+        </nav>
+
+    <main class="main-wrapper">
+        {{{ body }}}
     </main>
+
+    <section data-alert class="pop-up">
+        <p data-alert-text>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint, minus.</p>
+        <a href="/login" class="btn">login</a>
+    </section>
+
     <footer>
       
     </footer>
-  </div>
 
-  <!-- Render script for logged in users only -->
-  {{#if logged_in}}
-  <script src="/js/logout.js"></script>
-  {{/if}}
+  <script src="/js/script.js"></script>
+
 </body>
 
 </html>
