@@ -20,17 +20,38 @@
                 </div>
                 <div>
                     {{#if logged_in}}
-                    <a href="/login" class="btn"><i class="fa-solid fa-user"></i>profile</a>
+                    <a href="/user/{{user.id}}" class="btn"><i class="fa-solid fa-user"></i>profile</a>
                     <button data-open-logout class="btn" id="logout" onclick="openLogoutModal(event)"><i class="fa-solid fa-right-to-bracket"></i>logout</button>
-                    <dialog data-modal-logout class="modal">
-                        <h2>Logout?</h2>
-                        <div class="modal-wrapper logout-modal"> 
-                            <button class="btn" onclick="handleLogout(event)">Yes</button>
-                            <button class="btn" data-close-modal-logout onclick="closeLogoutModal(event)">No</button>
+                    <dialog data-modal-logout>
+                        <div class="modal">
+                            <h2>Logout?</h2>
+                            <hr>
+                            <div class="modal-wrapper logout-modal"> 
+                                <button class="btn" onclick="handleLogout(event)">Yes</button>
+                                <button class="btn" data-close-modal-logout onclick="closeLogoutModal(event)">No</button>
+                            </div>
                         </div>
                     </dialog>
                     {{else}}
-                    <a href="/login" class="btn">login</a>
+                    <button data-open-signin class="btn" onclick="openLoginModal(event)">login</button>
+                    <dialog data-modal-login>
+                        <div class="modal">
+                            <div>
+                                <h4>Log in to SHOUT.</h4>
+                            </div>
+                            <p class="alert"></p>
+                            <form class="signup-form" onsubmit="loginHandler(event)">
+                                <input type="email" name="email" id="email-box" placeholder="Email">
+                                <br>
+                                <input type="password" name="password" id="password-box" placeholder="Password">
+                                <br>
+                                <div>
+                                    <input type="submit" class="btn" value="Login" onclick="loginHandler(event);">
+                                    <button class="btn" onclick="closeLoginModal(event)">cancel</button>                                    
+                                </div>
+                            </form>
+                        </div>
+                    </dialog>
                     {{/if}}
                 </div>
             </div>
@@ -49,7 +70,7 @@
       
     </footer>
 
-  <script src="/js/script.js"></script>
+<script src="/js/script.js"></script>
 
 </body>
 

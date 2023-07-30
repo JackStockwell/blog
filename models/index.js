@@ -35,5 +35,6 @@ Comment.belongsTo(User, {
 module.exports = {
     User,
     Post,
-    UserFollow
+    UserFollow,
+    Comment
 };

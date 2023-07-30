@@ -1,12 +1,13 @@
 const router = require('express').Router();
 const { json } = require('sequelize');
 const sequelize = require('../config/connection');
-const { User, Post } = require('../models');
+const { User, Post, Comment } = require('../models');
 const withAuth = require('../utils/withAuth.js')
 
 
 
 router.get('/', async (req, res) => {
+
   try {
 
     const postData = await Post.findAll({
@@ -28,52 +29,55 @@ router.get('/', async (req, res) => {
     }
 
     const posts = postData.map((post) => post.toJSON())
+    
+    if (req.session.logged_in) {
 
-    res.render(
-        'home', {
-        posts,
-        logged_in: req.session.logged_in
-    })
+        const userData = await User.findOne({
+            where: {id: req.session.user_id}
+        })
+
+        const user = userData.toJSON();
+
+        res.render(
+            'home', {
+            user,
+            posts,
+            logged_in: req.session.logged_in
+        })
+    } else {
+        res.render(
+            'home', {
+            posts,
+        })
+    }
 
   } catch (err) {
     return res.status(500).json(err)
   }
 });
 
-      // const userData = await User.findOne({
-      //     where: {
-      //         username: req.params.name
-      //     },
-      //     include: [
-      //       {
-      //         model: User,
-      //         as: 'follower',
-      //         include: {
-      //           model: Post,
-      //         }
-      //       }
-      //     ]
-      // })
 
 router.get('/user/:name', async (req, res) => {
   try {
-
       const userData = await User.findOne({
+        where: {id: req.session.user_id}
+      })
+
+      const user = userData.toJSON();
+
+
+      const profileData = await User.findOne({
         where: {
           username: req.params.name
         },
         include: Post
       })
 
-      console.log(profile)
-
-      const jsonProfile = sequelize.JSON(profile)
-      
-
-      console.log(jsonProfile)
+      const profile = profileData.toJSON()
 
       res.render(
         'profile', {
+          user,
           profile
         }
       )
@@ -84,6 +88,11 @@ router.get('/user/:name', async (req, res) => {
 
 router.get('/post/:id', withAuth, async (req, res) => {
   try {
+    const userData = await User.findOne({
+      where: {id: req.session.user_id}
+    })
+
+    const user = userData.toJSON();
 
     const postData = await Post.findOne({
       where: {id: req.params.id},
@@ -92,19 +101,34 @@ router.get('/post/:id', withAuth, async (req, res) => {
       ]
     })
 
+    const commentData = await Comment.findAll({
+      where: {
+        post_id: req.params.id
+      },
+      include: [
+        {model: User, attributes: ['id', 'username']}
+      ],
+      order: [['date_created', 'ASC']]
+    });
+
     const post = postData.toJSON();
 
-    // const userData = await User.findOne({
-    //   where: {id: req.session.user_id},
-    //   attributes: ['id', 'username', 'avatar'],
-    // })
-    // res.status(200).json(post)
-    // const post = postData.toJSON()
-    console.log(post)
-    res.render('post', {
-      post,
-      logged_in: req.session.logged_in
-    })
+    if (commentData) {
+      const comments = commentData.map((comment) => comment.toJSON());
+
+      res.render('post', {
+        user,
+        post,
+        comments,
+        logged_in: req.session.logged_in
+      })
+    } else {
+      res.render('post', {
+        post,
+        logged_in: req.session.logged_in
+      })
+    }
+
   } catch (err) {
     res.status(500),json(err)
   }

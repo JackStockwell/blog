@@ -1,6 +1,25 @@
 // Query Selector
 
-const { post } = require("../../controllers/home-routes")
+const loginHandler = async (event) => {
+    event.preventDefault();
+
+    const email = document.querySelector('#email-box').value.trim();
+    const password = document.querySelector('#password-box').value.trim();
+
+    if (email && password) {
+        const response = await fetch('/api/users/login', {
+            method: 'POST',
+            body: JSON.stringify({email, password}),
+            headers: {'Content-Type': 'application/json'},
+        });
+
+        if (response.ok) {
+            document.location.replace('/')
+        } else {
+            const alertEl = document.querySelector('.alert').textContent = "Incorrect Email or Password!"
+        }
+    }
+}
 
 const handleLogout = async () => {
     const response = await fetch('/api/users/logout', {
@@ -70,17 +89,37 @@ const newComment = async (event) => {
 
     const content = document.querySelector('[data-post-text]').value.trim();
     const post_id = document.querySelector('[data-post-id]').getAttribute('data-post-id')
-    console.log(post_id)
-    const response = await fetch(`/api/users/follow/${username}`, {
+
+    const response = await fetch(`/api/comment`, {
         method: 'POST',
-        body: JSON.stringify({content}),
+        body: JSON.stringify({content, post_id}),
         headers: {'Content-Type': 'application/json'},
     })
 
-    
+    if (response.ok) {
+        window.location.reload();
+    }
+
 }
 
+// MODAL
+
+// Login Modal
+const openLoginModal = async (event) => {
+    event.preventDefault();
+    const modalLogin = document.querySelector('[data-modal-login]')
+    modalLogin.showModal()
+}
+
+const closeLoginModal = async (event) => {
+    event.preventDefault();
+    const modalLogin = document.querySelector('[data-modal-login]')
+    modalLogin.close()
+}
+
+// Logout Modal
 const openLogoutModal = async (event) => {
+    console.log("test")
     event.preventDefault();
     const modalLogout = document.querySelector('[data-modal-logout]')
     modalLogout.showModal()

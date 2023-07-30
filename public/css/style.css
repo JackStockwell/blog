@@ -68,11 +68,7 @@ body {
   fill: var(--red-btn);
 }
 
-@media (min-width: 768px) {
-  .button-59 {
-    min-width: 170px;
-  }
-}
+
 
 /* LOGIN WINDOW */
 
@@ -224,6 +220,17 @@ h1::after{
     transform: scale(1.1);
 }
 
+/* MODAL */
+
+.modal {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    text-align: center;
+    gap: 1rem;
+    padding: 0.5rem;
+}
+
 /* WRAPPERS */
 
 .main-wrapper {
@@ -276,6 +283,11 @@ textarea {
     flex-flow: column nowrap;
     padding: 0.75rem;
     gap: 1rem;
+}
+
+.post-form label {
+    color: var(--bgdark);
+    text-transform: uppercase;
 }
 
 /* POST CONTAINER */
@@ -427,5 +439,9 @@ textarea {
 
     .btn {
         transform: scale(1);
+    }
+
+    .button-59 {
+        min-width: 170px;
     }
 }

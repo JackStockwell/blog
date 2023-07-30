@@ -24,8 +24,8 @@
                     <input type="button" class="btn" onclick="newComment(event)" value="Comment">
                 </section>
                 <section>
-                    {{#each posts as |post|}}
-                    {{> post-timeline}}
+                    {{#each comments as |comment|}}
+                    {{> comment-details}}
                     {{/each}}           
                 </section>
             </section>
