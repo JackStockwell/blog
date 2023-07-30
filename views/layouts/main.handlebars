@@ -20,7 +20,7 @@
                 </div>
                 <div>
                     {{#if logged_in}}
-                    <a href="/user/{{user.id}}" class="btn"><i class="fa-solid fa-user"></i>profile</a>
+                    <a href="/user/{{user.username}}" data-user-id="{{user_id}}" class="btn"><i class="fa-solid fa-user"></i>profile</a>
                     <button data-open-logout class="btn" id="logout" onclick="openLogoutModal(event)"><i class="fa-solid fa-right-to-bracket"></i>logout</button>
                     <dialog data-modal-logout>
                         <div class="modal">
@@ -62,7 +62,7 @@
     </main>
 
     <section data-alert class="pop-up">
-        <p data-alert-text>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint, minus.</p>
+        <p data-alert-text></p>
         <a href="/login" class="btn">login</a>
     </section>
 

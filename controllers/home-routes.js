@@ -9,14 +9,14 @@ const withAuth = require('../utils/withAuth.js')
 router.get('/', async (req, res) => {
 
   try {
-
+    
     const postData = await Post.findAll({
       where: {},
       attributes: ['id', 'content', 'date_created'],
       include: [
         {
           model: User,
-          attributes: ['username']
+          attributes: ['id', 'username']
         }
       ],
       order: [['date_created', 'DESC']],
@@ -28,28 +28,31 @@ router.get('/', async (req, res) => {
       })
     }
 
-    const posts = postData.map((post) => post.toJSON())
-    
-    if (req.session.logged_in) {
+    const posts =  postData.map((post) => post.toJSON())
 
-        const userData = await User.findOne({
-            where: {id: req.session.user_id}
-        })
-
-        const user = userData.toJSON();
-
-        res.render(
-            'home', {
-            user,
-            posts,
-            logged_in: req.session.logged_in
-        })
-    } else {
+    if (!req.session.logged_in) {
         res.render(
             'home', {
             posts,
         })
     }
+
+    const userData = await User.findOne({
+        where: {id: req.session.user_id}
+    })
+
+    const user = userData.toJSON();
+
+
+    res.render(
+        'home', {
+        user,
+        posts,
+        logged_in: req.session.logged_in,
+        user_id: req.session.user_id
+    })
+
+
 
   } catch (err) {
     return res.status(500).json(err)
@@ -57,20 +60,25 @@ router.get('/', async (req, res) => {
 });
 
 
-router.get('/user/:name', async (req, res) => {
+router.get('/user/:name', withAuth, async (req, res) => {
   try {
+
       const userData = await User.findOne({
         where: {id: req.session.user_id}
       })
 
       const user = userData.toJSON();
 
-
       const profileData = await User.findOne({
         where: {
           username: req.params.name
         },
-        include: Post
+        include: [
+            {
+                model: Post,
+                include: [{model: User}]
+            }
+        ]
       })
 
       const profile = profileData.toJSON()
@@ -78,7 +86,9 @@ router.get('/user/:name', async (req, res) => {
       res.render(
         'profile', {
           user,
-          profile
+          profile,
+          logged_in: req.session.logged_in,
+          user_id: req.session.user_id
         }
       )
   } catch (err) {
@@ -120,12 +130,14 @@ router.get('/post/:id', withAuth, async (req, res) => {
         user,
         post,
         comments,
-        logged_in: req.session.logged_in
+        logged_in: req.session.logged_in,
+        user_id: req.session.user_id
       })
     } else {
       res.render('post', {
         post,
-        logged_in: req.session.logged_in
+        logged_in: req.session.logged_in,
+        user_id: req.session.user_id
       })
     }
 

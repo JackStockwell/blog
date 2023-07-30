@@ -329,8 +329,9 @@ textarea {
 
 .post-profile {
     display: flex;
+    width: 100%;
+    justify-content: space-between;
     grid-area: two;
-    width: fit-content;
     height: 40px;
     align-items: center;
 }
@@ -423,10 +424,6 @@ textarea {
 
     .loginWrapper {
         grid-template-columns: 1fr 30px 1fr;
-    }
-
-    .main-content-wrapper {
-        grid-template-columns: 2fr 1fr;
     }
 
     aside {

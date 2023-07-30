@@ -1,10 +1,18 @@
-<section>
-    <p id="username-handle" data-username="{{profile.username}}">{{username}}</p>
-    <button type="button" onclick="followUser(event)" id="follow-user" class="follow-btn">Follow</button>
+<main class="main-content-wrapper">
+    <button class="btn">Back</button>
+    <section class="post-wrapper">
+        <section class="post-box">
+            <form class="post-form">
+                <label for="postContent">What's on your mind?</label>
+                <textarea data-post-text type="text" name="postContent" id="postContent"></textarea>
+                <input type="button" class="width100 btn" value="post" onclick="newPost(event)">
+            </form>
+        </section>
+        <section class="post-container">
+            {{#each profile.posts as |post|}}
+            {{> post-timeline}}
+            {{/each}}            
+        </section>
 
-    {{#each posts as |post|}}
-    {{> post-timeline}}
-    {{/each}}
-</section>
-
-<script src="/js/script.js"></script>
+    </section>
+</main>

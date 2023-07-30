@@ -1,11 +1,21 @@
-// Query Selector
+// Error handler
 
+const errorHandle = (errorText) => {
+    const alert = document.querySelector('[data-alert]')
+    alert.classList.add("slide")
+    document.querySelector('[data-alert-text]').innerHTML = errorText
+    setTimeout(() => {alert.classList.remove('slide')}, 4900)
+}
+
+
+// Login Handler
 const loginHandler = async (event) => {
     event.preventDefault();
 
     const email = document.querySelector('#email-box').value.trim();
     const password = document.querySelector('#password-box').value.trim();
 
+    // Ensure
     if (email && password) {
         const response = await fetch('/api/users/login', {
             method: 'POST',
@@ -16,7 +26,7 @@ const loginHandler = async (event) => {
         if (response.ok) {
             document.location.replace('/')
         } else {
-            const alertEl = document.querySelector('.alert').textContent = "Incorrect Email or Password!"
+            document.querySelector('.alert').textContent = response.statusText
         }
     }
 }
@@ -49,21 +59,13 @@ const newPost = async (event) => {
         body: JSON.stringify({content}),
         headers: {'Content-Type': 'application/json'},
     })
-
-    switch (response.status) {
-        case 200:
-            window.location.reload();
-            break;
-        case 401:
-            const alert = document.querySelector('[data-alert]')
-            alert.classList.add("slide")
-            document.querySelector('[data-alert-text]').innerHTML = response.statusText
-            setTimeout(() => {alert.classList.remove('slide')}, 4900)
-
-        default:
-            break;
+    // Error handling
+    if (response.ok) {
+        window.location.reload();
+    } else {
+        errorHandle(response.statusText)
     }
-} 
+}
 
 const followUser = async (event) => {
 
@@ -128,5 +130,18 @@ const openLogoutModal = async (event) => {
 const closeLogoutModal = async (event) => {
     event.preventDefault();
     const modalLogout = document.querySelector('[data-modal-logout]')
+    modalLogout.close()
+}
+
+// Edit Modal 
+const openEditModal = async (event) => {
+    event.preventDefault();
+    const modalLogout = document.querySelector('[data-modal-edit]')
+    modalLogout.showModal()
+}
+
+const closeEditModal = async (event) => {
+    event.preventDefault();
+    const modalLogout = document.querySelector('[data-modal-edit]')
     modalLogout.close()
 }
