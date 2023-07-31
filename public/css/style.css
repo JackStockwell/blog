@@ -211,6 +211,7 @@ h1::after{
 
 .fa-ani {
     animation: scale 1s ease-in;
+    cursor: pointer;
 }
 
 .fa-ani:hover {

@@ -1,5 +1,6 @@
 <main class="main-content-wrapper">
     <section class="post-wrapper">
+        <button class="btn">Back</button>
         <section class="post-box">
             <section class="post" data-post-id="{{post.id}}">
                 <div class="post-img-div">
@@ -13,14 +14,14 @@
                     <hr>
                 </a>
                 <div class="date-made">
-                    <a href="/post/{{id}}"><i class="fa-solid fa-comment"></i>View Comments</a><p>{{formatDate post.date_created}}</p>
+                    <p>{{formatDate post.date_created}}</p>
                 </div>
             </section>
             <section class="comment-wrapper">
             {{!-- COMMENTS --}}
                 <section class="post-form">
                     <h3>Comment</h3>
-                    <textarea rows="6" data-post-text type="text" name="comment" class="" placeholder="What do you want to say?"></textarea>
+                    <textarea rows="6" data-post-text type="text" name="comment" placeholder="What do you want to say?"></textarea>
                     <input type="button" class="btn" onclick="newComment(event)" value="Comment">
                 </section>
                 <section>

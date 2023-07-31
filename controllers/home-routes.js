@@ -23,9 +23,10 @@ router.get('/', async (req, res) => {
     });
     
     if (!postData) {
-      return res.status(404).json({
+        res.status(404).json({
         message: "User not found",
       })
+      return
     }
 
     const posts =  postData.map((post) => post.toJSON())
@@ -35,6 +36,7 @@ router.get('/', async (req, res) => {
             'home', {
             posts,
         })
+        return
     }
 
     const userData = await User.findOne({

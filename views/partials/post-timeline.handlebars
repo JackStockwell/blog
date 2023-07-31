@@ -5,10 +5,12 @@
     <div class="post-profile" data-user="{{user.id}}">
         <a href="/user/{{user.username}}" target="_blank">{{user.username}}</a>
         {{#isEqual user_id user.id}}
-        <i class="fa-solid fa-pen-to-square" onclick="openEditModal(event)"></i>
+        <i class="fa-solid fa-pen-to-square fa-ani" onclick="openEditModal(event)"></i>
         <dialog data-modal-edit>
             <div class="modal">
                 <h2>What do you need to change.</h2>
+                <hr>
+                <textarea name="edit" id="edit-box" cols="30" rows="10" placeholder=""></textarea>
                 <hr>
                 <div class="modal-wrapper logout-modal">
                     <button class="btn" onclick="handleEdit(event)">Yes</button>
