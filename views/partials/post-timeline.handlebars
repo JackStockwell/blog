@@ -2,12 +2,32 @@
     <div class="post-img-div">
         <img src="/assets/icons/default.png" alt="Profile avatar">
     </div>
-    <div class="post-profile">
+    <div class="post-profile" data-user="{{user.id}}">
         <a href="/user/{{user.username}}" target="_blank">{{user.username}}</a>
+        {{#isEqual user_id user.id}}
+        <i class="fa-solid fa-pen-to-square fa-ani" onclick="openEditModal(event)"></i>
+        <dialog data-edit-id="" data-modal-edit>
+            <div class="modal">
+                <h2>Edit post.</h2>
+                <hr>
+                <textarea data-content-edit name="edit" class="edit-box" cols="30" rows="10"></textarea>
+                <hr>
+                <div class="modal-wrapper logout-modal">
+                    <button class="btn" onclick="handleEdit(event)">Change?</button>
+                    <button class="btn" onclick="closeEditModal(event)">Cancel.</button>
+                </div>
+                <hr>
+                <button class="btn" onclick="deleteEdit(event)">Delete?</button>
+            </div>
+        </dialog>
+        {{/isEqual}}
     </div>
     <a href="/post/{{id}}">
         <p class="post-p">{{content}}</p>
         <hr>
     </a>
-    <div class="date-made"><a href="/post/{{id}}"><i class="fa-solid fa-comment"></i>View Comments</a><p>{{formatDate date_created}}</p></div>
+    <div class="date-made">
+        <a href="/post/{{id}}"><i class="fa-solid fa-comment"></i>View Comments</a>
+        <p>{{formatDate date_created}}</p>
+    </div>
 </section>

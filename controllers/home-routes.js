@@ -1,80 +1,95 @@
 const router = require('express').Router();
 const { json } = require('sequelize');
 const sequelize = require('../config/connection');
-const { User, Post } = require('../models');
+const { User, Post, Comment } = require('../models');
 const withAuth = require('../utils/withAuth.js')
 
 
-
 router.get('/', async (req, res) => {
-  try {
 
+  try {
+    
     const postData = await Post.findAll({
       where: {},
       attributes: ['id', 'content', 'date_created'],
       include: [
         {
           model: User,
-          attributes: ['username']
+          attributes: ['id', 'username']
         }
       ],
       order: [['date_created', 'DESC']],
     });
     
     if (!postData) {
-      return res.status(404).json({
+        res.status(404).json({
         message: "User not found",
       })
+      return
     }
 
-    const posts = postData.map((post) => post.toJSON())
+    const posts =  postData.map((post) => post.toJSON())
+
+    if (!req.session.logged_in) {
+        res.render(
+            'home', {
+            posts,
+        })
+        return
+    }
+
+    const userData = await User.findOne({
+        where: {id: req.session.user_id}
+    })
+
+    const user = userData.toJSON();
+
 
     res.render(
         'home', {
+        user,
         posts,
-        logged_in: req.session.logged_in
+        logged_in: req.session.logged_in,
+        user_id: req.session.user_id
     })
+
+
 
   } catch (err) {
     return res.status(500).json(err)
   }
 });
 
-      // const userData = await User.findOne({
-      //     where: {
-      //         username: req.params.name
-      //     },
-      //     include: [
-      //       {
-      //         model: User,
-      //         as: 'follower',
-      //         include: {
-      //           model: Post,
-      //         }
-      //       }
-      //     ]
-      // })
 
-router.get('/user/:name', async (req, res) => {
+router.get('/user/:name', withAuth, async (req, res) => {
   try {
 
       const userData = await User.findOne({
+        where: {id: req.session.user_id}
+      })
+
+      const user = userData.toJSON();
+
+      const profileData = await User.findOne({
         where: {
           username: req.params.name
         },
-        include: Post
+        include: [
+            {
+                model: Post,
+                include: [{model: User}]
+            }
+        ]
       })
 
-      console.log(profile)
-
-      const jsonProfile = sequelize.JSON(profile)
-      
-
-      console.log(jsonProfile)
+      const profile = profileData.toJSON()
 
       res.render(
         'profile', {
-          profile
+          user,
+          profile,
+          logged_in: req.session.logged_in,
+          user_id: req.session.user_id
         }
       )
   } catch (err) {
@@ -84,6 +99,11 @@ router.get('/user/:name', async (req, res) => {
 
 router.get('/post/:id', withAuth, async (req, res) => {
   try {
+    const userData = await User.findOne({
+      where: {id: req.session.user_id}
+    })
+
+    const user = userData.toJSON();
 
     const postData = await Post.findOne({
       where: {id: req.params.id},
@@ -92,19 +112,36 @@ router.get('/post/:id', withAuth, async (req, res) => {
       ]
     })
 
+    const commentData = await Comment.findAll({
+      where: {
+        post_id: req.params.id
+      },
+      include: [
+        {model: User, attributes: ['id', 'username']}
+      ],
+      order: [['date_created', 'DESC']]
+    });
+
     const post = postData.toJSON();
 
-    // const userData = await User.findOne({
-    //   where: {id: req.session.user_id},
-    //   attributes: ['id', 'username', 'avatar'],
-    // })
-    // res.status(200).json(post)
-    // const post = postData.toJSON()
-    console.log(post)
-    res.render('post', {
-      post,
-      logged_in: req.session.logged_in
-    })
+    if (commentData) {
+      const comments = commentData.map((comment) => comment.toJSON());
+
+      res.render('post', {
+        user,
+        post,
+        comments,
+        logged_in: req.session.logged_in,
+        user_id: req.session.user_id
+      })
+    } else {
+      res.render('post', {
+        post,
+        logged_in: req.session.logged_in,
+        user_id: req.session.user_id
+      })
+    }
+
   } catch (err) {
     res.status(500),json(err)
   }
@@ -128,6 +165,11 @@ router.get('/signup', (req, res) => {
   }
 
   res.render('create-account')
+})
+
+// Wildcard routes, redirects to home page.
+router.get('*', async (req, res) =>{
+    res.redirect('/')
 })
 
 module.exports = router;

@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const { User, Post, UserFollow } = require('../../models');
+const { findOne } = require('../../models/User');
 const withAuth = require('../../utils/withAuth.js')
 
 router.get('/', async (req, res) => {
@@ -17,6 +18,12 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
 
     try {
+        if (!res.body) {
+            res.statusMessage = "Your post must contain content!"
+            res.status(401).end();
+            return
+        }
+
         if (!req.session.user_id) {
             res.statusMessage = "You must be logged in to post!"
             res.status(401).end();
@@ -32,6 +39,45 @@ router.post('/', async (req, res) => {
        
         res.status(200).json(postData)
 
+    } catch (err) {
+        res.status(500).json(err)
+    }
+});
+
+router.put('/', async (req, res) => {
+    try {
+        const postData = await Post.update({
+            content: req.body.content
+        },
+        {
+            where: {id: req.body.id},
+        })
+
+        console.log(postData)
+
+        res.status(200).json(postData)
+
+    } catch (err) {
+        res.status(500).json(err)
+    }
+})
+
+// Deletes a comment 
+router.delete('/', async (req, res) => {
+    try {
+        const postData = await Post.destroy({
+            where: {
+                id: req.body.id
+            }
+        })
+
+        if (!postData) {
+            res.statusMessage = "Post not found!"
+            res.status(401).end();
+            return
+        }
+
+        res.status(200).json(postData)
     } catch (err) {
         res.status(500).json(err)
     }

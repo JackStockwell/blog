@@ -68,10 +68,28 @@ body {
   fill: var(--red-btn);
 }
 
-@media (min-width: 768px) {
-  .button-59 {
-    min-width: 170px;
-  }
+/* FONT AWESOME ICONS */
+
+.fa-solid {
+    transform: scale(1.2);
+    max-width: 20px;
+    margin: 0 10px;
+}
+
+.fa-ani {
+    animation: scale 1s ease-in;
+    cursor: pointer;
+}
+
+.fa-ani:hover {
+    transform: scale(1.3);
+}
+.fa-ani:active {
+    transform: scale(1.1);
+}
+
+.house-div {
+    display: none;
 }
 
 /* LOGIN WINDOW */
@@ -82,7 +100,7 @@ body {
     align-items: center;
     justify-items: center;
     gap: 3rem;
-    margin: auto; 
+    margin: 2rem auto; 
     width: 55%;
     min-height: 100vh;
     align-content: center;
@@ -205,23 +223,15 @@ h1::after{
     margin: 10px;
 }
 
-/* FONT AWESOME ICONS */
+/* MODAL */
 
-.fa-solid {
-    transform: scale(1.2);
-    max-width: 20px;
-    margin: 0 10px;
-}
-
-.fa-ani {
-    animation: scale 1s ease-in;
-}
-
-.fa-ani:hover {
-    transform: scale(1.3);
-}
-.fa-ani:active {
-    transform: scale(1.1);
+.modal {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    text-align: center;
+    gap: 1rem;
+    padding: 0.5rem;
 }
 
 /* WRAPPERS */
@@ -261,6 +271,7 @@ aside {
 .post {
     background: var(--white-btn);
     border-radius: 5px;
+    font-size: 16px;
 }
 
 textarea {
@@ -276,6 +287,11 @@ textarea {
     flex-flow: column nowrap;
     padding: 0.75rem;
     gap: 1rem;
+}
+
+.post-form label {
+    color: var(--bgdark);
+    text-transform: uppercase;
 }
 
 /* POST CONTAINER */
@@ -317,8 +333,9 @@ textarea {
 
 .post-profile {
     display: flex;
+    width: 100%;
+    justify-content: space-between;
     grid-area: two;
-    width: fit-content;
     height: 40px;
     align-items: center;
 }
@@ -409,12 +426,12 @@ textarea {
         width: 33rem;
     }
 
-    .loginWrapper {
-        grid-template-columns: 1fr 30px 1fr;
+    .post {
+        font-size: 18px;
     }
 
-    .main-content-wrapper {
-        grid-template-columns: 2fr 1fr;
+    .loginWrapper {
+        grid-template-columns: 1fr 30px 1fr;
     }
 
     aside {
@@ -427,5 +444,9 @@ textarea {
 
     .btn {
         transform: scale(1);
+    }
+
+    .button-59 {
+        min-width: 170px;
     }
 }
