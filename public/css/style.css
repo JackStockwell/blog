@@ -68,7 +68,29 @@ body {
   fill: var(--red-btn);
 }
 
+/* FONT AWESOME ICONS */
 
+.fa-solid {
+    transform: scale(1.2);
+    max-width: 20px;
+    margin: 0 10px;
+}
+
+.fa-ani {
+    animation: scale 1s ease-in;
+    cursor: pointer;
+}
+
+.fa-ani:hover {
+    transform: scale(1.3);
+}
+.fa-ani:active {
+    transform: scale(1.1);
+}
+
+.house-div {
+    display: none;
+}
 
 /* LOGIN WINDOW */
 
@@ -78,7 +100,7 @@ body {
     align-items: center;
     justify-items: center;
     gap: 3rem;
-    margin: auto; 
+    margin: 2rem auto; 
     width: 55%;
     min-height: 100vh;
     align-content: center;
@@ -201,26 +223,6 @@ h1::after{
     margin: 10px;
 }
 
-/* FONT AWESOME ICONS */
-
-.fa-solid {
-    transform: scale(1.2);
-    max-width: 20px;
-    margin: 0 10px;
-}
-
-.fa-ani {
-    animation: scale 1s ease-in;
-    cursor: pointer;
-}
-
-.fa-ani:hover {
-    transform: scale(1.3);
-}
-.fa-ani:active {
-    transform: scale(1.1);
-}
-
 /* MODAL */
 
 .modal {
@@ -269,6 +271,7 @@ aside {
 .post {
     background: var(--white-btn);
     border-radius: 5px;
+    font-size: 16px;
 }
 
 textarea {
@@ -421,6 +424,10 @@ textarea {
     .hr-vert {
         transform: rotate(90deg);
         width: 33rem;
+    }
+
+    .post {
+        font-size: 18px;
     }
 
     .loginWrapper {

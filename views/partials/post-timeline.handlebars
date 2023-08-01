@@ -6,16 +6,18 @@
         <a href="/user/{{user.username}}" target="_blank">{{user.username}}</a>
         {{#isEqual user_id user.id}}
         <i class="fa-solid fa-pen-to-square fa-ani" onclick="openEditModal(event)"></i>
-        <dialog data-modal-edit>
+        <dialog data-edit-id="" data-modal-edit>
             <div class="modal">
-                <h2>What do you need to change.</h2>
+                <h2>Edit post.</h2>
                 <hr>
-                <textarea name="edit" id="edit-box" cols="30" rows="10" placeholder=""></textarea>
+                <textarea data-content-edit name="edit" class="edit-box" cols="30" rows="10"></textarea>
                 <hr>
                 <div class="modal-wrapper logout-modal">
-                    <button class="btn" onclick="handleEdit(event)">Yes</button>
-                    <button class="btn" onclick="closeEditModal(event)">No</button>
+                    <button class="btn" onclick="handleEdit(event)">Change?</button>
+                    <button class="btn" onclick="closeEditModal(event)">Cancel.</button>
                 </div>
+                <hr>
+                <button class="btn" onclick="deleteEdit(event)">Delete?</button>
             </div>
         </dialog>
         {{/isEqual}}

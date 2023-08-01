@@ -5,7 +5,6 @@ const { User, Post, Comment } = require('../models');
 const withAuth = require('../utils/withAuth.js')
 
 
-
 router.get('/', async (req, res) => {
 
   try {
@@ -120,7 +119,7 @@ router.get('/post/:id', withAuth, async (req, res) => {
       include: [
         {model: User, attributes: ['id', 'username']}
       ],
-      order: [['date_created', 'ASC']]
+      order: [['date_created', 'DESC']]
     });
 
     const post = postData.toJSON();
@@ -166,6 +165,11 @@ router.get('/signup', (req, res) => {
   }
 
   res.render('create-account')
+})
+
+// Wildcard routes, redirects to home page.
+router.get('*', async (req, res) =>{
+    res.redirect('/')
 })
 
 module.exports = router;

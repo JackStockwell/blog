@@ -11,7 +11,7 @@ const errorHandle = (errorText) => {
 // Login Handler
 const loginHandler = async (event) => {
     event.preventDefault();
-
+    // Query selector for values to parse as the body for the fetch API
     const email = document.querySelector('#email-box').value.trim();
     const password = document.querySelector('#password-box').value.trim();
 
@@ -22,7 +22,7 @@ const loginHandler = async (event) => {
             body: JSON.stringify({email, password}),
             headers: {'Content-Type': 'application/json'},
         });
-
+        closeLogoutModal()
         if (response.ok) {
             document.location.replace('/')
         } else {
@@ -47,7 +47,7 @@ const handleLogout = async () => {
 const newPost = async (event) => {
 
     event.preventDefault();
-
+    // Query selector for values to parse as the body for the fetch API
     const content = document.querySelector('[data-post-text]').value.trim();
     
     if (content.length < 1) {
@@ -67,28 +67,12 @@ const newPost = async (event) => {
     }
 }
 
-const followUser = async (event) => {
 
-    event.preventDefault();
-
-    const username = document.querySelector('#username-handle').getAttribute("data-username")
-
-    const response = await fetch(`/api/users/follow/${username}`, {
-        method: 'POST',
-        body: JSON.stringify({username}),
-        headers: {'Content-Type': 'application/json'},
-    })
-
-    if (response.ok) {
-        console.log("You're now following this user")
-    } else {
-        alert("Something went wrong..")
-    }
-}
-
+// Function that creates a new comment.
 const newComment = async (event) => {
     event.preventDefault();
 
+    // Query selector for values to parse as the body for the fetch API
     const content = document.querySelector('[data-post-text]').value.trim();
     const post_id = document.querySelector('[data-post-id]').getAttribute('data-post-id')
 
@@ -104,15 +88,66 @@ const newComment = async (event) => {
 
 }
 
+// Function for handling the edit of a post.
+const handleEdit = async (event) => {
+    event.preventDefault();
+    // Query selector for values to parse as the body for the fetch API
+    const content = document.querySelector('[data-content-edit]').value.trim()
+    const id = document.querySelector('[data-edit-id]').getAttribute('data-edit-id')
+
+    if (!content) {
+        errorHandle("Your post must contain content!")
+        return
+    }
+
+    // Fetch API request.
+    const response = await fetch(`/api/posts`, {
+        method: 'PUT',
+        body: JSON.stringify({id, content}),
+        headers: {'Content-Type': 'application/json'},
+    })
+
+    if (response.ok) {
+        closeEditModal(event)
+    } else {
+        alert("Something went wrong..")
+    }
+
+
+}
+
+const deleteEdit = async (event) => {
+    event.preventDefault()
+
+    const id = document.querySelector('[data-edit-id]').getAttribute('data-edit-id')
+
+    const response = await fetch(`/api/posts`, {
+        method: 'DELETE',
+        body: JSON.stringify({id}),
+        headers: {'Content-Type': 'application/json'},
+    })
+
+    if (response.ok) {
+        closeEditModal(event)
+    } else {
+        errorHandle(response.statusText)
+    }
+}
+
+// Back Button
+const backBtn = async () => {
+    window.history.back()
+}
+
 // MODAL
 
-// Login Modal
+// Open Login Modal
 const openLoginModal = async (event) => {
     event.preventDefault();
     const modalLogin = document.querySelector('[data-modal-login]')
     modalLogin.showModal()
 }
-
+// Closes the login modal
 const closeLoginModal = async (event) => {
     event.preventDefault();
     const modalLogin = document.querySelector('[data-modal-login]')
@@ -120,28 +155,40 @@ const closeLoginModal = async (event) => {
 }
 
 // Logout Modal
+// Opens the modal
 const openLogoutModal = async (event) => {
-    console.log("test")
     event.preventDefault();
     const modalLogout = document.querySelector('[data-modal-logout]')
     modalLogout.showModal()
 }
-
+// Closes the modal
 const closeLogoutModal = async (event) => {
     event.preventDefault();
     const modalLogout = document.querySelector('[data-modal-logout]')
     modalLogout.close()
 }
 
-// Edit Modal 
+// Edit Modal, parses the post id into the modal data-html.
+// Opens the modal
 const openEditModal = async (event) => {
     event.preventDefault();
+    // LogoutModal element
     const modalLogout = document.querySelector('[data-modal-edit]')
+    
+    // Sets the modal element id.
+    const id = event.target.closest('[data-post-id]').getAttribute('data-post-id')
+    modalLogout.setAttribute('data-edit-id', id)
+
+    // Sets the textContent of the textarea to the text already in the post.
+    const postContent = event.target.closest('[data-post-id]').getElementsByClassName('post-p')[0].textContent
+    modalLogout.firstElementChild.getElementsByClassName('edit-box')[0].textContent = postContent
+
     modalLogout.showModal()
 }
-
+// Closes the modal 
 const closeEditModal = async (event) => {
     event.preventDefault();
     const modalLogout = document.querySelector('[data-modal-edit]')
     modalLogout.close()
+    window.location.reload()
 }

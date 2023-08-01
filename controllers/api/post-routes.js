@@ -48,13 +48,36 @@ router.put('/', async (req, res) => {
     try {
         const postData = await Post.update({
             content: req.body.content
-        }, {
+        },
+        {
             where: {id: req.body.id},
-            
         })
 
+        console.log(postData)
 
+        res.status(200).json(postData)
 
+    } catch (err) {
+        res.status(500).json(err)
+    }
+})
+
+// Deletes a comment 
+router.delete('/', async (req, res) => {
+    try {
+        const postData = await Post.destroy({
+            where: {
+                id: req.body.id
+            }
+        })
+
+        if (!postData) {
+            res.statusMessage = "Post not found!"
+            res.status(401).end();
+            return
+        }
+
+        res.status(200).json(postData)
     } catch (err) {
         res.status(500).json(err)
     }
