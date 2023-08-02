@@ -10,7 +10,8 @@
             <div class="modal">
                 <h2>Edit post.</h2>
                 <hr>
-                <textarea data-content-edit name="edit" class="edit-box" cols="30" rows="10"></textarea>
+                <textarea data-title-edit name="postTitle" class="edit-title-box" id="postTitle" placeholder="Title"></textarea>
+                <textarea data-content-edit name="edit" class="edit-box text-box" cols="30" rows="10"></textarea>
                 <hr>
                 <div class="modal-wrapper logout-modal">
                     <button class="btn" onclick="handleEdit(event)">Change?</button>
@@ -23,6 +24,7 @@
         {{/isEqual}}
     </div>
     <a href="/post/{{id}}">
+        <h2 class="post-t">{{title}}</h2>
         <p class="post-p">{{content}}</p>
         <hr>
     </a>

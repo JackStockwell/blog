@@ -44,19 +44,17 @@ const handleLogout = async () => {
     }
 }
 
+// Creates a new post
 const newPost = async (event) => {
 
     event.preventDefault();
     // Query selector for values to parse as the body for the fetch API
+    const title = document.querySelector('[data-post-title]').value.trim();
     const content = document.querySelector('[data-post-text]').value.trim();
     
-    if (content.length < 1) {
-        return
-    }
-
     const response = await fetch('/api/posts', {
         method: 'POST',
-        body: JSON.stringify({content}),
+        body: JSON.stringify({title, content}),
         headers: {'Content-Type': 'application/json'},
     })
     // Error handling
@@ -92,6 +90,7 @@ const newComment = async (event) => {
 const handleEdit = async (event) => {
     event.preventDefault();
     // Query selector for values to parse as the body for the fetch API
+    const title = document.querySelector('[data-title-edit]').value.trim()
     const content = document.querySelector('[data-content-edit]').value.trim()
     const id = document.querySelector('[data-edit-id]').getAttribute('data-edit-id')
 
@@ -103,7 +102,7 @@ const handleEdit = async (event) => {
     // Fetch API request.
     const response = await fetch(`/api/posts`, {
         method: 'PUT',
-        body: JSON.stringify({id, content}),
+        body: JSON.stringify({id, title, content}),
         headers: {'Content-Type': 'application/json'},
     })
 
@@ -181,7 +180,11 @@ const openEditModal = async (event) => {
 
     // Sets the textContent of the textarea to the text already in the post.
     const postContent = event.target.closest('[data-post-id]').getElementsByClassName('post-p')[0].textContent
-    modalLogout.firstElementChild.getElementsByClassName('edit-box')[0].textContent = postContent
+    const titleContent = event.target.closest('[data-post-id]').getElementsByClassName('post-t')[0].textContent
+
+    modalLogout.firstElementChild.getElementsByClassName('edit-title-box')[0].textContent = titleContent;
+    modalLogout.firstElementChild.getElementsByClassName('edit-box')[0].textContent = postContent;
+
 
     modalLogout.showModal()
 }

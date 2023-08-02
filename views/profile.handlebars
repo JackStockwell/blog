@@ -4,7 +4,8 @@
         <section class="post-box">
             <form class="post-form">
                 <label for="postContent">What's on your mind?</label>
-                <textarea data-post-text type="text" name="postContent" id="postContent"></textarea>
+                <input data-post-title type="text" name="postTitle" id="postTitle" placeholder="Title">
+                <textarea data-post-text type="text" class="text-box" name="postContent" id="postContent"></textarea>
                 <input type="button" class="width100 btn" value="post" onclick="newPost(event)">
             </form>
         </section>
