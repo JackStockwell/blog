@@ -15,11 +15,13 @@ router.get('/', async (req, res) => {
     }
 })
 
+// Posts a new comment to the database.
 router.post('/', async (req, res) => {
-
+    
+    
     try {
-        if (!res.body) {
-            res.statusMessage = "Your post must contain content!"
+        if (!req.body.content || !req.body.title) {
+            res.statusMessage = "Your post must contain a title & content!"
             res.status(401).end();
             return
         }
@@ -31,6 +33,7 @@ router.post('/', async (req, res) => {
         }
 
         const newPost = {
+            title: req.body.title,
             content: req.body.content,
             user_id: req.session.user_id
         }
@@ -47,13 +50,12 @@ router.post('/', async (req, res) => {
 router.put('/', async (req, res) => {
     try {
         const postData = await Post.update({
+            title: req.body.title,
             content: req.body.content
         },
         {
             where: {id: req.body.id},
         })
-
-        console.log(postData)
 
         res.status(200).json(postData)
 
@@ -64,6 +66,7 @@ router.put('/', async (req, res) => {
 
 // Deletes a comment 
 router.delete('/', async (req, res) => {
+
     try {
         const postData = await Post.destroy({
             where: {

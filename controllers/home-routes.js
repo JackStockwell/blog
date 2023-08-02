@@ -11,7 +11,7 @@ router.get('/', async (req, res) => {
     
     const postData = await Post.findAll({
       where: {},
-      attributes: ['id', 'content', 'date_created'],
+      attributes: ['id', 'title', 'content', 'date_created'],
       include: [
         {
           model: User,
@@ -79,11 +79,12 @@ router.get('/user/:name', withAuth, async (req, res) => {
                 model: Post,
                 include: [{model: User}]
             }
-        ]
+        ],
+        order: [[Post, 'date_created', 'DESC']],
       })
 
       const profile = profileData.toJSON()
-
+      
       res.render(
         'profile', {
           user,
