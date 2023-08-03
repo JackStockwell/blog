@@ -62,6 +62,7 @@ const newPost = async (event) => {
         window.location.reload();
     } else {
         errorHandle(response.statusText)
+        window.location.reload();
     }
 }
 
