@@ -1,7 +1,6 @@
 <h1 style="font-size: 50px; text-align: center;">SHOUT<span style="color: red;">.</span></h1>
 
 ![Github top language](https://img.shields.io/github/languages/top/JackStockwell/shout.)
-![Static Badge](https://img.shields.io/badge/heroku)
 [![Link to node Js version download](https://img.shields.io/badge/heroku_deployment-purple)](https://shout-blog-2ca8a82d114a.herokuapp.com/)
 
 
