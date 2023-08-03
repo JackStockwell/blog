@@ -54,3 +54,5 @@ Infomation on the Unlince can be found [here](https://unlicense.org/)
 [Previous project: bundl](https://github.com/JackStockwell/bundl)
 
 [Button CSS](https://getcssscan.com/css-buttons-examples)
+
+[RegEx for Password validation](https://regexr.com/3bfsi)
