@@ -2,35 +2,17 @@ const router = require('express').Router();
 const { User, Post, UserFollow } = require('../../models');
 const withAuth = require('../../utils/withAuth')
 
-router.get('/', async (req, res) => {
-    try {
-        const userData = await User.findAll({
-            include: [
-                {
-                    model: Post,
-                    attributes: []
-                },
-                'following',
-                'follower'
-            ]
-        });
-
-    if (!userData) {
-        return res.status(404).json({
-            message: "No users found"
-        })
-    }
-
-    res.status(200).json(userData)
-    } catch (err) {
-        return res.status(500).json(err)
-    }
-});
-
 router.post('/create', async (req, res) => {
 
     try {
-        const userData = await User.create(req.body);
+             
+        const newUser = {
+            username: req.body.username,
+            email: req.body.email,
+            password: req.body.password
+        }
+       
+        const userData = await User.create(newUser);
 
         req.session.save(() => {
             req.session.user_id = userData.id;
@@ -38,16 +20,9 @@ router.post('/create', async (req, res) => {
     
             res.status(200).json(userData);
         });
+
     } catch (err) {
-        switch (err.parent.errno) {
-            case 1062:
-                res.status(400).json({
-                    message: "Username or Password must be unique!"
-                })
-                break;
-            default:
-                res.status(500).json(err)
-        }
+        res.status(500).json(err)
     }
 });
 
