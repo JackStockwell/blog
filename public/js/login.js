@@ -9,6 +9,16 @@ const signupHandler = async (event) => {
     const password = document.querySelector('#password1-signup').value.trim();
     const passwordConfirm = document.querySelector('#password2-signup').value.trim();
 
+    if (!username || !email || !password || !passwordConfirm) {
+        errorHandle("Must have a Username, Email and Password!")
+        return;
+    }
+
+    if (password !== passwordConfirm) {
+        errorHandle("Passwords must match!")
+        return;
+    }
+
     if (username && email && password === passwordConfirm) {
         const response = await fetch('/api/users/create', {
             method: 'POST',
@@ -19,10 +29,8 @@ const signupHandler = async (event) => {
         if (response.ok) {
             document.location.replace(`/`);
         } else {
-            alert(response.statusText);
+            errorHandle(response.statusText);
         }
 
-    } else if (password !== passwordConfirm) {
-        alert("Passwords must match!")
     }
 };
